@@ -6,6 +6,18 @@ import (
 	"strings"
 )
 
+// A worker pulls jobs off the queue and calls the processing functions for each
+func worker(queue <-chan string, failures chan<- string) {
+	defer wg.Done()
+	for img := range queue {
+		err := processImg(img)
+		if err != nil {
+			log.Println(err)
+			failures <- img
+		}
+	}
+}
+
 // The input is in the format "2109 2743 +312 +274"
 func parseTrim(input string) (width, height, x, y int) {
 	params := strings.Fields(input)
@@ -30,5 +42,5 @@ func parseTrim(input string) (width, height, x, y int) {
 
 // Given an input file path, what should the output file path be?
 func outPath(in string) string {
-	return "test/test.jpg"
+	return strings.Replace(in, "test/", "out/", 1)
 }

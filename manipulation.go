@@ -3,7 +3,6 @@ package main
 import (
 	"gopkg.in/gographics/imagick.v3/imagick"
 	"io/ioutil"
-	"log"
 	"os"
 	"os/exec"
 )
@@ -16,7 +15,6 @@ func processImg(inPath string) error {
 
 	err := mw.ReadImage(inPath)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -33,14 +31,12 @@ func processImg(inPath string) error {
 	err = mw.SetBackgroundColor(bg)
 	err = mw.SetImageBackgroundColor(bg)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
 	// Rotate the image so it is portrait orientation
 	err = mw.RotateImage(bg, rotate)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -56,7 +52,6 @@ func processImg(inPath string) error {
 	newHeight := h - (h * croph) - (h * croph)
 	err = mw.CropImage(uint(newWidth), uint(newHeight), int(xStart), int(yStart))
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -66,14 +61,12 @@ func processImg(inPath string) error {
 	// being close but not exact.
 	err = mw.BorderImage(bg, 100, 100, imagick.COMPOSITE_OP_COPY)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
 	// Try to make the image appear level
 	err = mw.DeskewImage(10000)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -82,7 +75,6 @@ func processImg(inPath string) error {
 	// to read from command-line imagemagick.
 	err = mw.SetImagePage(0, 0, 0, 0)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -96,14 +88,12 @@ func processImg(inPath string) error {
 	// get to the dimensions of the best crop.
 	tempf, err := ioutil.TempFile("", "relecprocessing")
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 	tempFilename := tempf.Name()
 	err = mw.WriteImageFile(tempf)
 	defer tempf.Close()
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
@@ -115,13 +105,11 @@ func processImg(inPath string) error {
 	// Capture the output from ImageMagick
 	trimOut, err := trim.Output()
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
 	err = os.Remove(tempFilename)
 	if err != nil {
-		log.Println(err)
 		// Keep going if the only problem is that we couldn't delete the tempfile
 	}
 
@@ -131,27 +119,23 @@ func processImg(inPath string) error {
 	// Crop the image, putting the padding all around
 	err = mw.CropImage(uint(width+2*padding), uint(height+2*padding), x-padding, y-padding)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
 	// Turn the background into true black
 	err = mw.FloodfillPaintImage(trueBlack, 10000, bg, 0, 0, false)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 	err = mw.SetBackgroundColor(trueBlack)
 	err = mw.SetImageBackgroundColor(trueBlack)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
 	// Write the processed image out to the correct location
 	err = mw.WriteImage(outPath(inPath))
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
