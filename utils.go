@@ -27,3 +27,8 @@ func parseTrim(input string) (width, height, x, y int) {
 	}
 	return
 }
+
+// Given an input file path, what should the output file path be?
+func outPath(in string) string {
+	return "test/test.jpg"
+}
