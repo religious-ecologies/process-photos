@@ -31,6 +31,7 @@ const black = "srgb(30, 30, 37)" // The black background isn't truly black
 const padding = 20               // How much of a border to leave around the schedule
 const extension = ".JPG"         // What kind of files are we processing?
 const buffersize = 10000         // How many images will we put in the queue? Should be basically all.
+const minForPb = 10              // How many images do we have to process to show a progress bar?
 
 func init() {
 
@@ -154,9 +155,6 @@ func main() {
 
 	bar := pb.New(len(images))
 	bar.ShowTimeLeft = true
-	if len(images) < 5 {
-		bar.ShowBar = false
-	}
 
 	// Start the workers which will begin to pull jobs off the channel
 	for w := 1; w <= jobs; w++ {
@@ -167,7 +165,9 @@ func main() {
 	imagick.Initialize()
 	defer imagick.Terminate()
 
+	if len(images) >= minForPb {
 	bar.Start()
+	}
 
 	// Add the images to the queue
 	for _, i := range images {
@@ -178,7 +178,9 @@ func main() {
 	wg.Wait()
 	close(failures)
 
+	if len(images) >= minForPb {
 	bar.Finish()
+	}
 
 	if len(failures) > 0 {
 		fmt.Println("\nThe following images were not correctly processed:")
