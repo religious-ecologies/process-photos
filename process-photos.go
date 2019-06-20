@@ -34,7 +34,7 @@ func init() {
 	backgroundFlag := flag.StringP("background", "b", "black", "What color is the background? black or purple")
 	flag.Float64VarP(&croph, "crop-height", "h", 0.1, "Percentage of image to crop from the top and the bottom (0.0 to 1.0)")
 	flag.Float64VarP(&cropw, "crop-width", "w", 0.1, "Percentage of image to crop from the left and the right (0.0 to 1.0)")
-	flag.IntVarP(&jobs, "jobs", "j", 4, "How many images should be processed in parallel?")
+	flag.IntVarP(&jobs, "jobs", "j", 0, "How many images should be processed in parallel? 0 indicates maximum reasonable number of jobs for the current system.")
 
 	flag.ErrHelp = errors.New("")
 
@@ -66,9 +66,16 @@ func init() {
 		log.Fatal("Background color must be set to black or purple.")
 	}
 
-	if jobs > runtime.NumCPU() {
-		jobs = runtime.NumCPU()
+	// ImageMagick is parallelized itself, so run fewer jobs than there are cores.
+	maxJobs := runtime.NumCPU() / 2
+	switch {
+	case jobs == 0:
+		jobs = runtime.NumCPU() / 2
+	case jobs > maxJobs:
+		jobs = maxJobs
 		log.Printf("Be realistic. Setting the number of jobs to %v.\n", jobs)
+	case jobs < 0:
+		jobs = 1
 	}
 
 	// What is the path to the input and output directories?
