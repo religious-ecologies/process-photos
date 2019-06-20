@@ -30,9 +30,11 @@ See the built-in help for all the options:
 ./process-photos --help
 ```
 
-## Compiling
+## Compiling and testing
 
 In general, this program should already be available to you on the server. But if you need to build it, you can clone this repository and run `make build`. Note that because this program uses the CGO bindings in order to build [Go Imagick](https://github.com/gographics/imagick) package, some environment variables need to be set. The Makefile takes care of this.
+
+You can test the program on the included images by running `make test`.
 
 ## License and acknowledgements
 
