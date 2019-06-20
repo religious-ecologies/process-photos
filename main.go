@@ -30,7 +30,6 @@ const trueblack = "srgb(0, 0, 0)"
 const black = "srgb(30, 30, 37)" // The black background isn't truly black
 const padding = 20               // How much of a border to leave around the schedule
 const extension = ".JPG"         // What kind of files are we processing?
-const buffersize = 10000         // How many images will we put in the queue? Should be basically all.
 const minForPb = 10              // How many images do we have to process to show a progress bar?
 
 func init() {
@@ -149,9 +148,9 @@ func init() {
 func main() {
 
 	// The queue channel will hold all of the images we need to process
-	queue := make(chan string, buffersize)
+	queue := make(chan string, len(images))
 	// Failures will be kept in a channel as well and printed at the end.
-	failures := make(chan string, buffersize)
+	failures := make(chan string, len(images))
 
 	bar := pb.New(len(images))
 	bar.ShowTimeLeft = true
