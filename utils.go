@@ -1,13 +1,15 @@
 package main
 
 import (
+	"gopkg.in/cheggaaa/pb.v1"
 	"log"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
 
 // A worker pulls jobs off the queue and calls the processing functions for each
-func worker(queue <-chan string, failures chan<- string) {
+func worker(queue <-chan string, failures chan<- string, bar *pb.ProgressBar) {
 	defer wg.Done()
 	for img := range queue {
 		err := processImg(img)
@@ -15,6 +17,7 @@ func worker(queue <-chan string, failures chan<- string) {
 			log.Println(err)
 			failures <- img
 		}
+		bar.Increment()
 	}
 }
 
@@ -42,5 +45,5 @@ func parseTrim(input string) (width, height, x, y int) {
 
 // Given an input file path, what should the output file path be?
 func outPath(in string) string {
-	return strings.Replace(in, "test/", "out/", 1)
+	return filepath.Join(outDir, filepath.Base(in))
 }
