@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gopkg.in/gographics/imagick.v3/imagick"
+	"gopkg.in/gographics/imagick.v2/imagick"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -59,7 +59,7 @@ func processImg(inPath string) error {
 	// This is necessary because the color of the corner pixels will determine
 	// which color is the background and this avoids the possibility of the color
 	// being close but not exact.
-	err = mw.BorderImage(bg, 100, 100, imagick.COMPOSITE_OP_COPY)
+	err = mw.BorderImage(bg, 100, 100)
 	if err != nil {
 		return err
 	}
@@ -123,7 +123,7 @@ func processImg(inPath string) error {
 	}
 
 	// Turn the background into true black
-	err = mw.FloodfillPaintImage(trueBlack, 10000, bg, 0, 0, false)
+	err = mw.FloodfillPaintImage(imagick.CHANNELS_ALL, trueBlack, 10000, bg, 0, 0, false)
 	if err != nil {
 		return err
 	}

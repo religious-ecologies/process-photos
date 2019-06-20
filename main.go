@@ -5,7 +5,7 @@ import (
 	"fmt"
 	flag "github.com/spf13/pflag"
 	"gopkg.in/cheggaaa/pb.v1"
-	"gopkg.in/gographics/imagick.v3/imagick"
+	"gopkg.in/gographics/imagick.v2/imagick"
 	"io/ioutil"
 	"log"
 	"os"
@@ -166,7 +166,7 @@ func main() {
 	defer imagick.Terminate()
 
 	if len(images) >= minForPb {
-	bar.Start()
+		bar.Start()
 	}
 
 	// Add the images to the queue
@@ -179,7 +179,7 @@ func main() {
 	close(failures)
 
 	if len(images) >= minForPb {
-	bar.Finish()
+		bar.Finish()
 	}
 
 	if len(failures) > 0 {

@@ -34,6 +34,8 @@ See the built-in help for all the options:
 
 In general, this program should already be available to you on the server. But if you need to build it, you can clone this repository and run `make build`. Note that because this program uses the CGO bindings in order to build [Go Imagick](https://github.com/gographics/imagick) package, some environment variables need to be set. The Makefile takes care of this.
 
+Note that this program assumes an ImageMagick in the 6.x version range is available, both for compiling and available as the `convert` command in your path. You can get this version of ImageMagick on Mac with `brew install imagemagick@6`. On Linux that is the version available in most package repositories.
+
 You can test the program on the included images by running `make test`.
 
 ## License and acknowledgements
