@@ -62,7 +62,7 @@ func processImg(inPath string) error {
 	// This is necessary because the color of the corner pixels will determine
 	// which color is the background and this avoids the possibility of the color
 	// being close but not exact.
-	err = mw.BorderImage(bg, 100, 100)
+	err = mw.BorderImage(bg, 10, 10)
 	if err != nil {
 		return err
 	}
