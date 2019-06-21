@@ -17,6 +17,8 @@ If you want pass in a subset of the images in the directory, perhaps for testing
 ./process-photos 02-original/2019-06-12/box013/*.JPG --out 03-for-import/2019-06-12/box013
 ```
 
+Note that the program will silently skip any images that already exist. You can use the second kind of input above to run a small batch first to make sure the settings are right, but it is up to you to delete the images that were output if they were not processed correctly.
+
 You will need to set the options based on what the original images look like in order to process them correctly. The key options are what direction the images should be rotated, how much of them can be obviously cropped before auto-cropping takes over, and what color the background is. For instance, this is a more typical example:
 
 ```

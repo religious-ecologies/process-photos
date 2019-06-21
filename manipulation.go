@@ -9,6 +9,14 @@ import (
 
 func processImg(inPath string) error {
 
+	outPath := getOutPath(inPath)
+
+	// Check if the out file does not exist. If it does already exist, then just
+	// skip it.
+	if _, err := os.Stat(outPath); !os.IsNotExist(err) {
+		return nil
+	}
+
 	// Allocate memory for the image and read it in
 	mw := imagick.NewMagickWand()
 	defer mw.Destroy()
@@ -134,7 +142,7 @@ func processImg(inPath string) error {
 	}
 
 	// Write the processed image out to the correct location
-	err = mw.WriteImage(outPath(inPath))
+	err = mw.WriteImage(outPath)
 	if err != nil {
 		return err
 	}

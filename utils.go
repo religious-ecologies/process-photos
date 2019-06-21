@@ -44,6 +44,6 @@ func parseTrim(input string) (width, height, x, y int) {
 }
 
 // Given an input file path, what should the output file path be?
-func outPath(in string) string {
+func getOutPath(in string) string {
 	return filepath.Join(outDir, filepath.Base(in))
 }
