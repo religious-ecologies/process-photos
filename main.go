@@ -26,7 +26,6 @@ var version string // Date/time of compilation is injected at compile time
 
 // Define colors and other constants
 const purple = "srgb(146, 147, 199)"
-const trueblack = "srgb(0, 0, 0)"
 const black = "srgb(30, 30, 37)" // The black background isn't truly black
 const padding = 20               // How much of a border to leave around the schedule
 const extension = ".JPG"         // What kind of files are we processing?

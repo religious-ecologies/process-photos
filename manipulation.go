@@ -31,11 +31,6 @@ func processImg(inPath string) error {
 	defer bg.Destroy()
 	bg.SetColor(background)
 
-	// Eventually we will replace the background with true black
-	trueBlack := imagick.NewPixelWand()
-	defer trueBlack.Destroy()
-	trueBlack.SetColor(trueblack)
-
 	err = mw.SetBackgroundColor(bg)
 	err = mw.SetImageBackgroundColor(bg)
 	if err != nil {
@@ -126,17 +121,6 @@ func processImg(inPath string) error {
 
 	// Crop the image, putting the padding all around
 	err = mw.CropImage(uint(width+2*padding), uint(height+2*padding), x-padding, y-padding)
-	if err != nil {
-		return err
-	}
-
-	// Turn the background into true black
-	err = mw.FloodfillPaintImage(imagick.CHANNELS_ALL, trueBlack, 10000, bg, 0, 0, false)
-	if err != nil {
-		return err
-	}
-	err = mw.SetBackgroundColor(trueBlack)
-	err = mw.SetImageBackgroundColor(trueBlack)
 	if err != nil {
 		return err
 	}
