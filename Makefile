@@ -7,10 +7,6 @@ $(BINARY_NAME): $(wildcard *.go)
 	go mod tidy
 	CGO_CFLAGS_ALLOW="-Xpreprocessor" go build -ldflags $(BUILD_FLAGS) -o $(BINARY_NAME)
 
-install : $(wildcard *.go)
-	go mod tidy
-	CGO_CFLAGS_ALLOW="-Xpreprocessor" go install -ldflags $(BUILD_FLAGS) -o $(BINARY_NAME)
-
 clean : 
 	rm -f test-output/*
 
