@@ -102,7 +102,7 @@ func processImg(inPath string) error {
 
 	// This command blurs the image to deal with minor imperfections and
 	// variations in color, then returns the dimensions of the best trim.
-	cmd := "convert " + tempFilename + " -virtual-pixel edge -blur 0x30 -fuzz 15% -trim -format '%w %h %X %Y' info:"
+	cmd := "convert " + tempFilename + " -virtual-pixel edge -blur 0x30 -fuzz 12% -trim -format '%w %h %X %Y' info:"
 	trim := exec.Command("bash", "-c", cmd)
 
 	// Capture the output from ImageMagick

@@ -15,7 +15,8 @@ clobber :
 	
 test : clean
 	@mkdir -p test-output
-	./$(BINARY_NAME) -r ccw -h 0.1 -w 0.05 --background purple test/purple-*.JPG -o test-output/
-	./$(BINARY_NAME) -r cw -h 0.05 -w 0.05 --background black test/black-*.JPG -o test-output/
+	./$(BINARY_NAME) -h 0.2 -w 0.2 --background purple test/purple-IMG_006*.JPG -o test-output/
+	./$(BINARY_NAME) -h 0.2 -w 0.075 -p 50 --background purple test/purple-IMG_5*.JPG -o test-output/
+	./$(BINARY_NAME) -r cw --background black test/black-*.JPG -o test-output/
 
 .PHONY : test
