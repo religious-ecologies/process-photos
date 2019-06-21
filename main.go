@@ -127,7 +127,8 @@ func init() {
 		}
 		for _, f := range files {
 			if filepath.Ext(f.Name()) == extension {
-				images = append(images, f.Name())
+				filename := filepath.Join(flag.Arg(0), f.Name())
+				images = append(images, filename)
 			}
 		}
 	} else {
