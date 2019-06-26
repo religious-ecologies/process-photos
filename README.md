@@ -26,6 +26,12 @@ You will need to set the options based on what the original images look like in 
     02-original/2019-06-12/box013 --out 03-for-import/2019-06-12/box013
 ```
 
+In practice, it can be tedious to set both the output path and the input path. When we are running this on our bulk batches of images, we mirror the directory paths from, e.g., `02-original/2019-06-12/box013/` to `03-for-import/2019-06-12/box013`. If you omit the directory with the `--out` flag *and* include the `--mirror-path` flag, it will do this mirroring for you automatically, including creating the subdirectories if necessary. For instance, the command below would create the correct output with the `03-for-import/` directory.
+
+```
+./process-photos --mirror-path 02-original/2019-06-12/box013/IMG_0678.JPG 
+```
+
 See the built-in help for all the options:
 
 ```
