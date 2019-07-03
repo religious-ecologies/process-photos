@@ -18,5 +18,6 @@ test : clean
 	./$(BINARY_NAME) -h 0.2 -w 0.2 --background purple test/purple-IMG_006*.JPG -o test-output/
 	./$(BINARY_NAME) -h 0.2 -w 0.075 -p 50 --background purple test/purple-IMG_5*.JPG -o test-output/
 	./$(BINARY_NAME) -r cw --background black test/black-*.JPG -o test-output/
+	./$(BINARY_NAME) --background gray -h 0.16 -w 0.1 test/gray-*.JPG -o test-output/
 
 .PHONY : test

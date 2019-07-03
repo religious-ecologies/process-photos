@@ -28,6 +28,7 @@ var version string // Date/time of compilation is injected at compile time
 
 // Define colors and other constants
 const purple = "srgb(146, 147, 199)"
+const gray = "srgb(95, 95, 125)"
 const black = "srgb(30, 30, 37)"        // The black background isn't truly black
 const extension = ".JPG"                // What kind of files are we processing?
 const minForPb = 10                     // How many images do we have to process to show a progress bar?
@@ -37,11 +38,11 @@ const originalsDir = "02-original"      // The directory where the originals are
 func init() {
 
 	rotateFlag := flag.StringP("rotate", "r", "ccw", "Rotate which direction? ccw or cw")
-	backgroundFlag := flag.StringP("background", "b", "black", "What color is the background? black or purple")
+	backgroundFlag := flag.StringP("background", "b", "gray", "What color is the background? gray, black, purple")
 	flag.Float64VarP(&croph, "crop-height", "h", 0.1, "Percentage of image to crop from the top and the bottom (0.0 to 1.0)")
 	flag.Float64VarP(&cropw, "crop-width", "w", 0.1, "Percentage of image to crop from the left and the right (0.0 to 1.0)")
-	flag.IntVarP(&padding, "padding", "p", 25, "How many pixels of extra padding should be added?")
-	flag.IntVarP(&jobs, "jobs", "j", 0, "How many images should be processed in parallel? 0 sets a sane default for the current system.")
+	flag.IntVarP(&padding, "padding", "p", 30, "How many pixels of extra padding should be added?")
+	flag.IntVarP(&jobs, "jobs", "j", 0, "How many images should be processed in parallel? 0 sets an aggressive but sane default for the current system.")
 	flag.StringVarP(&outDir, "out", "o", "_", "Where should the processed files be output?")
 	mirrorPath := flag.Bool("mirror-path", false, "Mirror the output path instead of specifying the out directory.")
 	showVersion := flag.Bool("version", false, "Show version")
@@ -80,8 +81,10 @@ func init() {
 		background = black
 	case "purple":
 		background = purple
+	case "gray":
+		background = gray
 	default:
-		log.Fatal("Background color must be set to black or purple.")
+		log.Fatal("Background color must be set to black, purple, or gray.")
 	}
 
 	// ImageMagick is parallelized itself, so run fewer jobs than there are cores.
