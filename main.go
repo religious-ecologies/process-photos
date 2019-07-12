@@ -28,6 +28,7 @@ var version string // Date/time of compilation is injected at compile time
 
 // Define colors and other constants
 const purple = "srgb(146, 147, 199)"
+const darkpurple = "srgb(130, 120, 160)"
 const gray = "srgb(95, 95, 125)"
 const black = "srgb(30, 30, 37)"        // The black background isn't truly black
 const extension = ".JPG"                // What kind of files are we processing?
@@ -81,10 +82,12 @@ func init() {
 		background = black
 	case "purple":
 		background = purple
+	case "darkpurple":
+		background = darkpurple
 	case "gray":
 		background = gray
 	default:
-		log.Fatal("Background color must be set to black, purple, or gray.")
+		log.Fatal("Background color must be set to black, purple, darkpurple, or gray.")
 	}
 
 	// ImageMagick is parallelized itself, so run fewer jobs than there are cores.
