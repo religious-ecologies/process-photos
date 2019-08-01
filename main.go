@@ -39,7 +39,7 @@ const originalsDir = "02-original"      // The directory where the originals are
 func init() {
 
 	rotateFlag := flag.StringP("rotate", "r", "ccw", "Rotate which direction? ccw or cw")
-	backgroundFlag := flag.StringP("background", "b", "gray", "What color is the background? gray, black, purple, darkpurple")
+	backgroundFlag := flag.StringP("background", "b", "gray", "What color is the background? gray, black, purple, darkpurple, or a string in the format srgb(0, 0, 0).")
 	flag.Float64VarP(&croph, "crop-height", "h", 0.1, "Percentage of image to crop from the top and the bottom (0.0 to 1.0)")
 	flag.Float64VarP(&cropw, "crop-width", "w", 0.1, "Percentage of image to crop from the left and the right (0.0 to 1.0)")
 	flag.IntVarP(&padding, "padding", "p", 30, "How many pixels of extra padding should be added?")
@@ -87,7 +87,10 @@ func init() {
 	case "gray":
 		background = gray
 	default:
-		log.Fatal("Background color must be set to black, purple, darkpurple, or gray.")
+		if !strings.HasPrefix(*backgroundFlag, "srgb(") {
+			log.Fatal("Background color must be set to black, purple, darkpurple, or gray.\nOr you must provide a color in the format srgb(0, 0, 0).")
+		}
+		background = *backgroundFlag
 	}
 
 	// ImageMagick is parallelized itself, so run fewer jobs than there are cores.
@@ -216,6 +219,7 @@ func main() {
 		for f := range failures {
 			fmt.Println(f)
 		}
+		fmt.Println("")
 	}
 
 }
